@@ -12,6 +12,9 @@ transition: slide-left
 mdc: true
 seoMeta:
   ogImage: auto
+
+version: 2.0.1
+author: D. Rigaudière
 ---
 
 <div class="text-center text-4xl font-bold p-3">
@@ -19,8 +22,8 @@ Introduction à la Haute Disponibilité
 </div>
 Cas des serveurs Web et Bases de données
 
-<div class="abs-bl m-6 text-base text-gray-600">
-  v. 2.0.0
+<div class="abs-bl m-6 text-sm text-gray-600 text-">
+  v. {{ $slidev.configs.version }} / {{ $slidev.configs.author }}
 </div>
 
 <div class="abs-br m-6 text-base">
@@ -37,7 +40,7 @@ The last comment block of each slide will be treated as slide notes. It will be 
 -->
 
 ---
-transition: fade-out
+transition: slide-left
 ---
 
 # Introduction et concepts clés
@@ -115,6 +118,25 @@ Exemples :
 - Bases orientées **CA** : priorité à la cohérence et disponibilité locale (SQL traditionnels).
 - Bases orientées **AP** : disponibilité et tolérance réseau (Cassandra).
 - Bases orientées **CP** : cohérence et tolérance réseau (MongoDB, etc.).
+
+---
+transition: fade-out
+---
+
+# Introduction et concepts clés
+
+## Théorème CAP
+
+### Les 3 propriétés
+- **C** : Cohérence (*Consistency*)  
+- **A** : Disponibilité (*Availability*)  
+- **P** : Tolérance au partitionnement (*Partition tolerance*)  
+
+### Pourquoi pas les 3 ?
+- En cas de **partition réseau** :
+  - Garantir **C** → on sacrifie **A** (certaines requêtes refusées)  
+  - Garantir **A** → on sacrifie **C** (données différentes selon les nœuds)  
+- **P** est incontournable : toute infra distribuée peut subir une partition  
 
 ---
 transition: fade-out
