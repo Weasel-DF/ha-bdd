@@ -80,11 +80,15 @@ transition: fade-out
 ## RPO & RTO
 
 - **RPO (Recovery Point Objective)**
+
   → Perte de données maximale acceptable après un incident
+
   → Exemple : « pas plus de 5 min de données perdues »
 
 - **RTO (Recovery Time Objective)**
+
   → Temps maximal pour rétablir le service
+
   → Exemple : « service restauré en moins de 30 minutes »
 
 ---
