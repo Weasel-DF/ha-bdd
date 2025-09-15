@@ -12,8 +12,10 @@ transition: slide-left
 mdc: true
 seoMeta:
   ogImage: auto
-
-version: 2.0.1
+htmlAttrs:
+  dir: ltr
+lang: fr-FR
+version: 2.0.3
 author: D. Rigaudière
 ---
 
@@ -23,7 +25,7 @@ Introduction à la Haute Disponibilité
 Cas des serveurs Web et Bases de données
 
 <div class="abs-bl m-6 text-sm text-gray-600 text-">
-  v. {{ $slidev.configs.version }} / {{ $slidev.configs.author }}
+  v. {{ $slidev.configs.version }} • {{ $slidev.configs.author }}
 </div>
 
 <div class="abs-br m-6 text-base">
@@ -35,12 +37,8 @@ Cas des serveurs Web et Bases de données
   </a>
 </div>
 
-<!--
-The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
--->
-
 ---
-transition: slide-left
+transition: fade-out
 ---
 
 # Introduction et concepts clés
@@ -93,6 +91,9 @@ transition: fade-out
 
 ---
 transition: fade-out
+layout: image-right
+image: /assets/images/human_error.jpg
+imageWidth: 50%
 ---
 
 # Introduction et concepts clés
@@ -106,6 +107,9 @@ transition: fade-out
 
 ---
 transition: fade-out
+layout: image-right
+image: /assets/images/cap.png
+imageWidth: 30%
 ---
 
 # Introduction et concepts clés
@@ -132,15 +136,19 @@ transition: fade-out
 ## Théorème CAP
 
 ### Les 3 propriétés
-- **C** : Cohérence (*Consistency*)  
-- **A** : Disponibilité (*Availability*)  
-- **P** : Tolérance au partitionnement (*Partition tolerance*)  
+- **C** : Cohérence : toutes les lectures renvoient la même version des données
+- **A** : Disponibilité : le service répond toujours aux requêtes
+- **P** : Tolérance au partitionnement : le système continue de fonctionner malgré des coupures réseau
 
 ### Pourquoi pas les 3 ?
 - En cas de **partition réseau** :
-  - Garantir **C** → on sacrifie **A** (certaines requêtes refusées)  
+  - Garantir **C** → on sacrifie **A** (certaines requêtes refusées \[temporairement\] pour maintenir la cohérence)  
   - Garantir **A** → on sacrifie **C** (données différentes selon les nœuds)  
-- **P** est incontournable : toute infra distribuée peut subir une partition  
+- **P** est inévitable : toute infra distribuée peut subir une partition  
+
+### En résumé :
+- Pas de partition (réseau parfait) → C + A
+- Partition (cas réel) → choisir entre C ou A
 
 ---
 transition: fade-out
@@ -157,6 +165,9 @@ La haute disponibilité repose sur une approche **globale** :
 
 ---
 transition: fade-out
+layout: image-right
+image: /assets/images/ha.png
+imageWidth: 40%
 ---
 
 # Stratégies de haute disponibilité
@@ -197,6 +208,9 @@ transition: fade-out
 
 ---
 transition: fade-out
+layout: image-right
+image: /assets/images/synchro_asynchro.jpg
+imageWidth: 33%
 ---
 
 # Stratégies de haute disponibilité
@@ -338,7 +352,7 @@ transition: fade-out
 transition: slide-left
 ---
 
-# TP – Mise en place d’une HA MariaDB avec Galera
+# TP • Mise en place d’une HA MariaDB avec Galera
 
 ## Objectifs
 - Déployer un **cluster MariaDB Galera** (3 nœuds minimum)
@@ -353,3 +367,24 @@ transition: slide-left
 5. Simuler une panne d’un nœud et tester la continuité
 
 [Exemple de procédure](https://www.it-connect.fr/comment-mettre-en-place-mariadb-galera-cluster-sur-debian-11/)
+
+---
+transition: slide-left
+---
+
+# TP • HA Web avec Nginx et WordPress
+
+## Objectifs
+- Déployer **2 serveurs web Nginx** avec **WordPress**
+- Connecter WordPress au **cluster MariaDB Galera**
+- Mettre en place un **Load Balancer HAProxy** devant les serveurs web
+- Tester la **tolérance aux pannes** (serveur web ou DB)
+
+## Étapes
+1. Installer **Nginx + PHP-FPM + WordPress** sur 2 VM/applicatifs identiques
+2. Configurer la connexion WordPress → **cluster Galera** (IP/hostname partagé)
+3. Mettre en place un **load balancer** (HAProxy)
+4. Vérifier la répartition des requêtes (logs, sessions)
+5. Simuler la panne d’un serveur web et observer la continuité
+
+[Exemple de procédure pour HAProxy](https://www.it-connect.fr/mise-en-place-dun-serveur-haproxy/)
